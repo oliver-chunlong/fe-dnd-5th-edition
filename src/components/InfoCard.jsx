@@ -1,5 +1,19 @@
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+
 function InfoCard({ cardInfo }) {
-  return <li>name = {cardInfo.name}</li>;
+  // return <li>name = {cardInfo.name}</li>;
+
+  return (
+    <Card>
+      <CardContent>
+        <Typography variant="h5" content="div">
+          {cardInfo.name}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default InfoCard;
