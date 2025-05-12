@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 function SearchBar({ setSearchTerm, searchTerm }) {
-  const [category, setCategory] = useState("");
+  const [endpoint, setEndpoint] = useState("");
 
   function handleClick(event) {
     event.preventDefault();
-    setSearchTerm("https://www.dnd5eapi.co/api/2014/" + category);
+    setSearchTerm("https://www.dnd5eapi.co/api/2014/" + endpoint);
   }
 
   return (
@@ -14,7 +14,7 @@ function SearchBar({ setSearchTerm, searchTerm }) {
         <input
           type="text"
           onChange={(event) => {
-            setCategory(event.target.value);
+            setEndpoint(event.target.value);
           }}
         />
       </label>
