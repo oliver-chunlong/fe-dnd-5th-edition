@@ -6,12 +6,13 @@ import ListItemText from "@mui/material/ListItemText";
 import InfoCard from "./InfoCard.jsx";
 
 
-function InfoPanel({ searchResults, category }) {
+function InfoPanel({ searchResults, category, name }) {
+  console.log("Info panel search results: ", searchResults, "category: ", category, "name: ", name)
   const cards = searchResults.map((searchResult) => {
     return (
       <Grid item key={searchResult.index}>
         <Box>
-          <InfoCard cardInfo={searchResult} />
+          <InfoCard searchResult={searchResult} category={category} name={name}/>
         </Box>
       </Grid>
     );

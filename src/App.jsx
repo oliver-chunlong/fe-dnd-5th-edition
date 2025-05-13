@@ -14,12 +14,14 @@ import "./App.css";
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("")
+  const [name, setName] = useState("")
 
   useEffect(() => {
-    setLoading(true)
-    fetch(searchTerm)
+    if (category) {
+      setLoading(true)
+      fetch(searchTerm)
       .then((response) => {
         return response.json();
       })
@@ -27,16 +29,19 @@ function App() {
         return setSearchResults(body.results)
       })
       .then(() => {
-        setLoading(false)
-      })
+          console.log("Search results in searchTerm useEffect: ", "search term: ", searchTerm, "search results: ", searchResults)
+          setLoading(false)
+        })
+      }
     }, [searchTerm]);
 
     useEffect(() =>{
-      setLoading(true)
       setSearchTerm("https://www.dnd5eapi.co/api/2014/" + category)
     }, [category])
 
-
+    useEffect(() =>{
+      setSearchTerm((oldSearchTerm) => oldSearchTerm + "/" + name)
+    }, [name])
 
     return (
       <Container>
@@ -75,13 +80,14 @@ function App() {
               setSearchResults={setSearchResults}
               setSearchTerm={setSearchTerm}
               searchTerm={searchTerm}
+              setName={setName}
               ></SearchBar>
             </Grid>
           </Grid>
         </Box>
 
         <Box sx={{
-            marginTop: 20, // Adds space at the top to push content below the fixed header
+            marginTop: 25, // Adds space at the top to push content below the fixed header
           }}>
           <Grid container direction="column" spacing={2}>
           {
@@ -91,7 +97,7 @@ function App() {
               <p>Loading...</p>
             </Grid >
             : 
-            <InfoPanel searchResults={searchResults} category={category} />
+            <InfoPanel searchResults={searchResults} category={category} name={name}/>
             }
           </Grid>
         </Box>

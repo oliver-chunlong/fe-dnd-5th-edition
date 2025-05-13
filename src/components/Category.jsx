@@ -6,7 +6,7 @@ function Category({setCategory}) {
   const categories = ["Classes", "Spells", "Features"];
 
   function changeCategory(category) {
-    return () => setCategory(category);
+    return () => setCategory(category.toLowerCase());
   }
 
   return categories.map((category) => {
