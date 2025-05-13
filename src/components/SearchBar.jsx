@@ -6,11 +6,6 @@ import Box from "@mui/material/Box";
 function SearchBar({ setSearchTerm, searchTerm }) {
   const [endpoint, setEndpoint] = useState("");
 
-  function handleClick(event) {
-    event.preventDefault();
-    setSearchTerm("https://www.dnd5eapi.co/api/2014/" + endpoint);
-  }
-
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
       {}
@@ -21,7 +16,7 @@ function SearchBar({ setSearchTerm, searchTerm }) {
           setEndpoint(event.target.value);
         }}
       />
-      <Button variant="contained" onClick={handleClick}>
+      <Button variant="contained" onClick={()=>{}}>
         {} Search
       </Button>
     </Box>
