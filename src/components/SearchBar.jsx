@@ -3,11 +3,16 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-function SearchBar({ setName }) {
+function SearchBar({ setSearchTerms }) {
   const [endpoint, setEndpoint] = useState("");
 
   function handleClick() {
-    setName(endpoint)
+    setSearchTerms((oldSearchTerms) => {
+      return {
+        ...oldSearchTerms,
+      name: endpoint
+      }
+    })
   }
 
   return (

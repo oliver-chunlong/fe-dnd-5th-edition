@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-function Category({setCategory}) {
+function Category({setSearchTerms}) {
   const categories = ["Classes", "Spells", "Features"];
 
   function changeCategory(category) {
-    return () => setCategory(category.toLowerCase());
+    return () => setSearchTerms((oldSearchTerms) => {
+      return {
+        name: "",
+        category: category.toLowerCase()
+      }
+    });
   }
 
   return categories.map((category) => {

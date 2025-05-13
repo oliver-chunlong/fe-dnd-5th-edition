@@ -8,40 +8,40 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import DataRenderer from "./components/DataRenderer.jsx"
 
 import "./App.css";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState("")
-  const [name, setName] = useState("")
+  const [searchTerms, setSearchTerms] = useState({category: "", name: ""}) 
+  const [display, setDisplay] = useState()
 
   useEffect(() => {
+    const category = searchTerms.category
+    const name = searchTerms.name
     if (category) {
       setLoading(true)
-      fetch(searchTerm)
+      const url = "https://www.dnd5eapi.co/api/2014/" + category + "/" + name
+      fetch(url)
       .then((response) => {
         return response.json();
       })
       .then((body) => {
-        return setSearchResults(body.results)
+        if (body.results) {
+          return setSearchResults(body.results)
+        }
+        return setSearchResults([body])
       })
       .then(() => {
-          console.log("Search results in searchTerm useEffect: ", "search term: ", searchTerm, "search results: ", searchResults)
           setLoading(false)
         })
-      }
-    }, [searchTerm]);
+     }
+    }, [searchTerms]);
 
-    useEffect(() =>{
-      setSearchTerm("https://www.dnd5eapi.co/api/2014/" + category)
-    }, [category])
+    useEffect(() => console.log(display, [display]))
 
-    useEffect(() =>{
-      setSearchTerm((oldSearchTerm) => oldSearchTerm + "/" + name)
-    }, [name])
 
     return (
       <Container>
@@ -73,14 +73,12 @@ function App() {
             justifyContent="center" // Center items horizontally
             spacing={1} // Add some horizontal spacing between category items
             > 
-              <Category setCategory={setCategory} /> 
+              <Category setSearchTerms={setSearchTerms}/> 
             </Grid>
             <Grid item xs={12} md={8}>
               <SearchBar
-              setSearchResults={setSearchResults}
-              setSearchTerm={setSearchTerm}
-              searchTerm={searchTerm}
-              setName={setName}
+              setSearchTerms={setSearchTerms}
+              searchTerms={searchTerms}
               ></SearchBar>
             </Grid>
           </Grid>
@@ -97,13 +95,15 @@ function App() {
               <p>Loading...</p>
             </Grid >
             : 
-            <InfoPanel searchResults={searchResults} category={category} name={name}/>
+            <InfoPanel setDisplay={setDisplay} searchResults={searchResults}/>
             }
           </Grid>
         </Box>
 
+        <DataRenderer data={display}/>
+
       </Container>
-    )
+)
   
   
   //   (<Container maxWidth="lg">
